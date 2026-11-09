@@ -4,21 +4,34 @@ def mostrar_productos():
     st.header("Catálogo de productos")
 
     st.write(
-        "Conoce nuestra línea de calzado ecológico "
-        "elaborado con biocuero vegetal."
+        "Sistema de Gestión de Tiendas Minoristas "
+        "de la Cooperativa de Mujeres de Occidente."
     )
+
+    st.subheader("Productos disponibles")
 
     productos = [
         {
-            "Producto": "Sandalias de biocuero para adultos",
-            "Categoría": "Adultos",
-            "Precio": "$37.49"
+            "Producto": "Arroz",
+            "Categoría": "Granos básicos",
+            "Unidad": "Libra"
         },
         {
-            "Producto": "Sandalias de biocuero infantiles",
-            "Categoría": "Infantil",
-            "Precio": "$18.99"
+            "Producto": "Frijoles",
+            "Categoría": "Granos básicos",
+            "Unidad": "Libra"
+        },
+        {
+            "Producto": "Aceite vegetal",
+            "Categoría": "Aceites",
+            "Unidad": "Botella"
         }
     ]
 
     st.table(productos)
+
+    st.info(
+        "Este catálogo es utilizado por las tiendas "
+        "minoristas y el Centro de Distribución "
+        "para la gestión de productos."
+    )

@@ -1,31 +1,52 @@
-import mysql.connector
+
 import streamlit as st
+from modulos.login import login
+from modulos.VENTAS import mostrar_venta
 
-st.title("Conexión con base de datos MySQL")
+# Inicializar variables de sesión
+if "sesion_iniciada" not in st.session_state:
+    st.session_state["sesion_iniciada"] = False
 
-# Obtener las credenciales de Streamlit Secrets
-host = st.secrets["mysql"]["host"]
-port = st.secrets["mysql"]["port"]
-user = st.secrets["mysql"]["user"]
-password = st.secrets["mysql"]["password"]
-database = st.secrets["mysql"]["database"]
+if "usuario" not in st.session_state:
+    st.session_state["usuario"] = ""
 
-# Intentar establecer la conexión
-try:
-    conn = mysql.connector.connect(
-        host=host,
-        port=port,
-        user=user,
-        password=password,
-        database=database
+# Comprobar si el usuario inició sesión
+if st.session_state["sesion_iniciada"]:
+
+    st.sidebar.title("Menú")
+
+    st.sidebar.write(
+        f"Usuario: {st.session_state['usuario']}"
     )
 
-    if conn.is_connected():
-        st.success("Conexión exitosa a la base de datos MySQL.")
+    opciones = [
+        "Ventas",
+        "Información"
+    ]
 
-except mysql.connector.Error as err:
-    st.error(f"Error al conectar con la base de datos: {err}")
+    seleccion = st.sidebar.selectbox(
+        "Seleccione una opción",
+        opciones
+    )
 
-finally:
-    if "conn" in locals() and conn.is_connected():
-        conn.close()
+    # Mostrar módulo de ventas
+    if seleccion == "Ventas":
+        mostrar_venta()
+
+    # Mostrar información del sistema
+    elif seleccion == "Información":
+        st.header("Información del sistema")
+        st.write(
+            "Aplicación desarrollada durante "
+            "el Laboratorio de SGI."
+        )
+
+    # Cerrar sesión
+    if st.sidebar.button("Cerrar sesión"):
+        st.session_state["sesion_iniciada"] = False
+        st.session_state["usuario"] = ""
+        st.rerun()
+
+else:
+    # Mostrar inicio de sesión
+    login()

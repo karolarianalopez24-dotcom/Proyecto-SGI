@@ -3,7 +3,6 @@ from modulos.login import login
 from modulos.VENTAS import mostrar_venta
 from modulos.productos import mostrar_productos
 
-
 # Inicializar variables de sesión
 if "sesion_iniciada" not in st.session_state:
     st.session_state["sesion_iniciada"] = False
@@ -20,28 +19,23 @@ if st.session_state["sesion_iniciada"]:
         f"Usuario: {st.session_state['usuario']}"
     )
 
-   
-opciones = [
-    "Ventas",
-    "Productos",
-    "Información"
-]
-
+    opciones = [
+        "Ventas",
+        "Productos",
+        "Información"
+    ]
 
     seleccion = st.sidebar.selectbox(
         "Seleccione una opción",
         opciones
     )
 
-    # Mostrar módulo de ventas
     if seleccion == "Ventas":
         mostrar_venta()
-        
+
     elif seleccion == "Productos":
         mostrar_productos()
 
-
-    # Mostrar información del sistema
     elif seleccion == "Información":
         st.header("Información del sistema")
         st.write(
@@ -49,12 +43,11 @@ opciones = [
             "el Laboratorio de SGI."
         )
 
-    # Cerrar sesión
     if st.sidebar.button("Cerrar sesión"):
         st.session_state["sesion_iniciada"] = False
         st.session_state["usuario"] = ""
         st.rerun()
 
 else:
-    # Mostrar inicio de sesión
     login()
+
